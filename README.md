@@ -31,6 +31,7 @@ npm install chat-ui
 | **Action Menu** | Expandable "+" button with rich actions | `inputActions` |
 | **Image Lightbox** | Gallery viewer for image attachments | Always on |
 | **Virtualized List** | `@tanstack/react-virtual` for 10K+ messages | Always on |
+| **Sub-microsecond Sizing** | `@chenglou/pretext` for ultra-fast off-DOM height calculations | Always on |
 | **Theming** | Dark/Light/Custom tokens via CSS variables | `theme` |
 | **Message Search** | Full-text message search with highlighting | `useMessageSearch` |
 
