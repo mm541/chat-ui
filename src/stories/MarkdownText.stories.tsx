@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { MarkdownText } from '../components/MarkdownText';
+import { MarkdownText } from '../components/Markdown';
 
 const meta: Meta<typeof MarkdownText> = {
   title: 'Components/MarkdownText',
@@ -112,3 +112,24 @@ The endpoint returns the following structure:
 `,
   },
 };
+
+export const MathematicalFormulas: Story = {
+  args: {
+    children: `## Physics is Fun
+    
+Lift is calculated by the following equation:
+
+$$L = \\frac{1}{2} \\rho v^2 S C_L$$
+
+Where:
+- $\\rho$ is the air density
+- $v$ is the velocity
+- $S$ is the surface area
+- $C_L$ is the lift coefficient
+
+And the classic:
+$E = mc^2$
+`,
+  },
+};
+

@@ -186,3 +186,56 @@ export const SystemMessages: Story = {
     return <ChatUI messages={msgs} onSendMessage={() => {}} headerTitle="System Messages" />;
   },
 };
+
+/** Spanish localization via custom dictionary */
+export const SpanishLocalization: Story = {
+  render: () => {
+    const esDictionary = {
+      inputPlaceholder: "Escribe un mensaje...",
+      sendButtonAriaLabel: "Enviar mensaje",
+      statusSent: "Enviado",
+      statusDelivered: "Entregado",
+      searchPlaceholder: "Buscar mensajes...",
+    };
+    return (
+      <ChatUI 
+        messages={sampleMessages} 
+        onSendMessage={() => {}} 
+        dictionary={esDictionary}
+        headerTitle="Asistente IA" 
+        headerSubtitle="En línea" 
+      />
+    );
+  },
+};
+
+/** Deep styling via classNames (Tailwind example) */
+export const CustomStyling: Story = {
+  render: () => (
+    <ChatUI
+      messages={sampleMessages}
+      onSendMessage={() => {}}
+      headerTitle="Styled Chat"
+      classNames={{
+        chatRoot: 'border-2 border-indigo-500 rounded-xl overflow-hidden shadow-2xl',
+        header: 'bg-indigo-600 text-white',
+        bubbleSent: 'bg-indigo-500 text-white shadow-md',
+        bubbleReceived: 'bg-slate-100 text-slate-800',
+        inputContainer: 'border-t-2 border-indigo-200 bg-slate-50',
+      }}
+    />
+  ),
+};
+
+/** Interactive Pinned Messages */
+export const PinnedMessages: Story = {
+  render: () => {
+    const msgs: ChatMessage[] = [
+      ...sampleMessages,
+      { id: 'pin-1', sender: 'agent', text: '📌 This is a pinned message with important context!', timestamp: new Date(), isPinned: true },
+      { id: 'pin-2', sender: 'user', text: 'Another pinned message about the project goals.', timestamp: new Date(), isPinned: true },
+    ];
+    return <ChatUI messages={msgs} onSendMessage={() => {}} headerTitle="Pinned Messages" />;
+  },
+};
+

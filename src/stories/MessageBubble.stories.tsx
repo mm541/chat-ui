@@ -9,7 +9,11 @@ const meta: Meta<typeof MessageBubble> = {
   component: MessageBubble,
   decorators: [(Story) => (
     <ChatProvider messages={[]} onSendMessage={() => {}}>
-      <div className="chat-ui-root" style={{ padding: '24px', maxWidth: '600px', background: 'var(--c-bg, #09090b)' }}>
+      <div 
+        className="chat-ui-root" 
+        style={{ padding: '24px', maxWidth: '600px', background: 'var(--c-bg, #09090b)' }}
+        onContextMenu={(e) => e.preventDefault()} // Context menu is custom
+      >
         <Story />
       </div>
     </ChatProvider>
@@ -157,3 +161,21 @@ export const GroupPositions: Story = {
     </ChatProvider>
   ),
 };
+
+export const WithCustomClasses: Story = {
+  render: () => (
+    <ChatProvider 
+      messages={[]} 
+      onSendMessage={() => {}}
+      classNames={{
+        bubbleSent: 'bg-emerald-600 text-white rounded-none shadow-none',
+        timestamp: 'text-emerald-300 italic',
+      }}
+    >
+      <div className="chat-ui-root" style={{ padding: '24px', maxWidth: '600px', background: 'var(--c-bg, #09090b)' }}>
+        <MessageBubble message={{ ...baseMsg, sender: 'user', text: 'Custom themed bubble via global context injection.' }} />
+      </div>
+    </ChatProvider>
+  ),
+};
+

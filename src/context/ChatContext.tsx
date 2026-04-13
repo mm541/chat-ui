@@ -126,9 +126,10 @@ export interface ChatContextValue {
 
 const ChatContext = createContext<ChatContextValue | undefined>(undefined);
 
-export interface ChatProviderProps extends Omit<ChatContextValue, 'openLightbox' | 'dictionary'> {
+export interface ChatProviderProps extends Omit<ChatContextValue, 'openLightbox' | 'dictionary' | 'theme'> {
   children: React.ReactNode;
   dictionary?: Partial<ChatDictionary>;
+  theme?: ChatTheme;
 }
 
 export const ChatProvider: React.FC<ChatProviderProps> = ({
@@ -157,7 +158,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({
   renderAttachment,
   disableImageLightbox,
   showTimestampOnHover = true,
-  theme,
+  theme = 'dark',
   dictionary,
   placeholder,
   classNames,
