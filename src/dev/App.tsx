@@ -182,12 +182,12 @@ export const App = () => {
       />
 
       <div className="dev-chat-container">
-        <div style={{ padding: '0.5rem', background: 'var(--c-surface)', borderBottom: '1px solid var(--c-border)', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-          <button onClick={() => setIsSpanish(!isSpanish)} className="chat-ui-action-btn" title="Toggle Language">
-            <Globe size={18} /> {isSpanish ? 'English' : 'Español'}
-          </button>
-        </div>
         <ChatUI
+          headerActions={
+            <button onClick={() => setIsSpanish(!isSpanish)} className="chat-ui-action-btn" title="Toggle Language">
+              <Globe size={18} /> {isSpanish ? 'English' : 'Español'}
+            </button>
+          }
           dictionary={isSpanish ? esDictionary : undefined}
           classNames={{
             chatRoot: 'custom-dev-chat',
