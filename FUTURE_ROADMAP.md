@@ -13,6 +13,7 @@ These are table-stakes features users expect from a modern chat library.
 - [ ] **Rich Link Previews** — Auto-detect URLs in message text and render an OG-card preview (image, title, description, favicon) below the bubble. Provide an `onFetchLinkPreview` callback so users can plug in their own metadata fetcher. Overridable via `renderLinkPreview`.
 - [ ] **Mention System** — `@user` autocomplete dropdown triggered while typing. Provide a `users` or `mentionSuggestions` prop. Highlighted mention chips in rendered messages. Overridable via `renderMentionSuggestion`.
 - [ ] **Message Formatting Toolbar** — Toggle-able toolbar above the input with Bold, Italic, Code, Strikethrough, and Link buttons (like Slack's composer). Inserts markdown syntax around selected text. Controlled via `showFormattingToolbar` prop.
+- [ ] **Layout & Sidebar System** — Optional composable layout (`<ChatLayout />`) featuring a customizable sidebar menu for conversation history, user lists, and workspace navigation. Includes mobile-responsive drawer behavior overlay.
 
 ---
 
@@ -21,7 +22,6 @@ These are table-stakes features users expect from a modern chat library.
 Features that differentiate Chat UI from other libraries.
 
 - [ ] **Threaded Replies Panel** — Click a reply quote → slides open a side-panel (or inline expandable) showing the full thread branch. Prop: `threadView: 'panel' | 'inline' | 'none'`. Overridable via `renderThread`.
-- [ ] **Message Pinning** — Pin messages to the top of the chat. "Pinned Messages" drawer/banner accessible from the header. Props: `onPinMessage`, `pinnedMessages[]`. Overridable via `renderPinnedBanner`.
 - [ ] **Multi-Select Mode** — Long-press or checkbox toggle enters selection mode. Batch actions: forward, delete, copy. Props: `enableMultiSelect`, `onBatchAction`. Overridable via `renderSelectionToolbar`.
 - [ ] **Unread Separator** — Auto-inserted "N new messages" divider line when the user is scrolled up and new messages arrive. Clicking it scrolls to the first unread. Prop: `unreadCount`, `firstUnreadId`.
 - [ ] **Drag-to-Reply (Mobile)** — Swipe-right gesture on a message bubble to quote-reply. Haptic feedback on threshold. Prop: `enableSwipeReply: boolean`.
@@ -42,8 +42,7 @@ Micro-interactions and visual touches that make the experience feel premium.
 
 ## 🔧 Infrastructure & DX
 
-- [ ] **NPM Publish Pipeline** — Finalize `package.json` exports, add `files` field, setup `prepublishOnly` script, publish to npm.
-- [ ] **CI/CD (GitHub Actions)** — `ci.yml` with lint → type-check → test → build on PR. Auto-publish on tag.
+- [ ] **NPM Publish Pipeline** — Setup `prepublishOnly` script and publish version 1.0 to npm.
 - [ ] **Storybook Addon Fix** — Resolve version mismatch between Storybook core (v10) and addons (v8) so `build-storybook` works.
 - [ ] **Chromatic / Visual Regression** — Connect Storybook to Chromatic for automated screenshot diffing on PRs.
 - [ ] **Bundle Size Monitoring** — Add `size-limit` or `bundlewatch` to CI to prevent regressions (current: 36.74 KB JS, 28.19 KB CSS).
