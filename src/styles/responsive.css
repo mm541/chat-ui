@@ -1,0 +1,43 @@
+/* ========================================
+   Responsive / Container Queries
+   ======================================== */
+
+@container chatui (max-width: 480px) {
+  .chat-ui-bubble-content-col {
+    max-width: 92%;
+  }
+
+  .chat-ui-bubble {
+    padding: var(--c-spacing) calc(var(--c-spacing) * 1.25);
+  }
+  
+  .chat-ui-input-area {
+    gap: 8px;
+  }
+
+  .chat-ui-input-container {
+    padding: 8px 12px 12px;
+  }
+
+  .chat-ui-header {
+    padding: calc(var(--c-spacing) * 1.5) calc(var(--c-spacing) * 2);
+  }
+
+  .chat-ui-action-popover {
+    min-width: 220px;
+  }
+
+  .chat-ui-action-popover-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@container chatui (max-width: 320px) {
+  .chat-ui-bubble-content-col {
+    max-width: 96%;
+  }
+
+  .chat-ui-action-popover-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

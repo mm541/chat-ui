@@ -1,0 +1,45 @@
+/* ========================================
+   Suggested Reply Chips
+   ======================================== */
+
+.chat-ui-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 4px 16px 12px;
+  align-items: center;
+}
+
+.chat-ui-suggestion-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--c-radius-full);
+  border: 1px solid var(--c-surface-border);
+  background: var(--c-surface-glass);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: var(--c-text-main);
+  font-size: var(--c-font-size-sm);
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--c-transition-base);
+  white-space: nowrap;
+}
+
+.chat-ui-suggestion-chip:hover {
+  border-color: var(--c-primary);
+  background: var(--c-primary-subtle);
+  color: var(--c-primary);
+}
+
+.chat-ui-suggestion-chip:active {
+  transform: scale(0.96);
+}
+
+.chat-ui-suggestion-icon {
+  display: flex;
+  align-items: center;
+  font-size: 1.1em;
+}

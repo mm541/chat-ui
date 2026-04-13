@@ -1,0 +1,81 @@
+/* ========================================
+   Design Tokens & Theme Variables
+   ======================================== */
+
+:root {
+  /* Core Foundation */
+  --c-bg: #09090b;
+  --c-surface: #18181b;
+  --c-surface-glass: rgba(24, 24, 27, 0.75);
+  --c-surface-elevated: #27272a;
+  --c-surface-border: rgba(255, 255, 255, 0.08);
+  
+  /* Primary Brand (Sleek Indigo/Violet) */
+  --c-primary: #8b5cf6;
+  --c-primary-hover: #7c3aed;
+  --c-primary-glow: rgba(139, 92, 246, 0.4);
+  --c-primary-subtle: rgba(139, 92, 246, 0.12);
+  
+  /* Semantic Colors */
+  --c-success: #22c55e;
+  --c-danger: #ef4444;
+  --c-warning: #f59e0b;
+  
+  /* Typography */
+  --c-text-main: #f4f4f5;
+  --c-text-muted: #a1a1aa;
+  --c-text-inverted: #ffffff;
+  
+  /* Message Bubbles */
+  --c-bubble-sent: linear-gradient(135deg, var(--c-primary), #6366f1);
+  --c-bubble-sent-text: var(--c-text-inverted);
+  --c-bubble-recv: var(--c-surface-elevated);
+  --c-bubble-recv-text: var(--c-text-main);
+  
+  /* Shadows */
+  --c-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --c-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.16);
+  --c-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.24);
+  --c-shadow-glow: 0 0 20px var(--c-primary-glow);
+  
+  /* Metrics & Radii */
+  --c-radius-sm: 10px;
+  --c-radius-md: 16px;
+  --c-radius-lg: 24px;
+  --c-radius-bubble: 22px;
+  --c-radius-full: 9999px;
+  --c-spacing: 8px;
+  
+  /* Typography */
+  --c-font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --c-font-size-xs: 0.75rem;
+  --c-font-size-sm: 0.875rem;
+  --c-font-size-base: 1rem;
+  
+  /* Animation timings */
+  --c-transition-fast: 0.15s ease;
+  --c-transition-base: 0.2s ease;
+  --c-transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light Theme Override */
+.chat-ui-theme-light {
+  --c-bg: #fdfdfd;
+  --c-surface: #f4f4f5;
+  --c-surface-glass: rgba(244, 244, 245, 0.8);
+  --c-surface-elevated: #ffffff;
+  --c-surface-border: rgba(0, 0, 0, 0.08);
+  
+  --c-text-main: #18181b;
+  --c-text-muted: #71717a;
+  --c-text-inverted: #ffffff;
+  
+  --c-bubble-sent: linear-gradient(135deg, var(--c-primary), #6366f1);
+  --c-bubble-sent-text: var(--c-text-inverted);
+  --c-bubble-recv: var(--c-surface-elevated);
+  --c-bubble-recv-text: var(--c-text-main);
+  
+  --c-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --c-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --c-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+}

@@ -1,0 +1,92 @@
+/* ========================================
+   Message Context Menu
+   ======================================== */
+
+.chat-ui-context-menu-anchor {
+  position: relative;
+}
+
+/* ⋯ trigger button */
+.chat-ui-context-trigger {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: var(--c-surface-elevated);
+  color: var(--c-text-muted);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease, background-color 0.15s ease;
+  z-index: 5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.chat-ui-context-trigger.visible {
+  opacity: 1;
+}
+
+.chat-ui-context-trigger:hover {
+  background: var(--c-surface);
+  color: var(--c-text-main);
+}
+
+/* Floating dropdown */
+.chat-ui-context-menu {
+  position: fixed;
+  z-index: 1000;
+  min-width: 160px;
+  background: var(--c-surface-elevated);
+  border: 1px solid var(--c-surface-border);
+  border-radius: 10px;
+  padding: 4px;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+  animation: chat-ui-ctx-fade-in 0.12s ease-out;
+}
+
+@keyframes chat-ui-ctx-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.chat-ui-context-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  color: var(--c-text-main);
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.1s ease;
+  text-align: left;
+}
+
+.chat-ui-context-menu-item:hover {
+  background-color: var(--c-surface);
+}
+
+.chat-ui-context-menu-item.danger {
+  color: var(--c-error, #ef4444);
+}
+
+.chat-ui-context-menu-item.danger:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+}

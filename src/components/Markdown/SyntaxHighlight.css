@@ -1,0 +1,92 @@
+/* ========================================
+   Syntax Highlighting (highlight.js)
+   A minimal dark theme matching the chat-ui design tokens.
+   Consumers can override by importing their own highlight.js theme.
+   ======================================== */
+
+.hljs {
+  background: transparent !important;
+  color: var(--c-text-main);
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in,
+.hljs-name,
+.hljs-tag {
+  color: #c084fc; /* violet-400 */
+}
+
+.hljs-string,
+.hljs-title,
+.hljs-section,
+.hljs-attribute,
+.hljs-literal,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type,
+.hljs-addition {
+  color: #86efac; /* green-300 */
+}
+
+.hljs-comment,
+.hljs-quote,
+.hljs-deletion,
+.hljs-meta {
+  color: #71717a; /* zinc-500 */
+}
+
+.hljs-number,
+.hljs-regexp,
+.hljs-link {
+  color: #fbbf24; /* amber-400 */
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-subst {
+  color: #fb923c; /* orange-400 */
+}
+
+.hljs-variable,
+.hljs-params {
+  color: #93c5fd; /* blue-300 */
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: 700;
+}
+
+/* Light theme overrides */
+.chat-ui-theme-light .hljs-keyword,
+.chat-ui-theme-light .hljs-selector-tag,
+.chat-ui-theme-light .hljs-built_in,
+.chat-ui-theme-light .hljs-name,
+.chat-ui-theme-light .hljs-tag {
+  color: #7c3aed;
+}
+
+.chat-ui-theme-light .hljs-string,
+.chat-ui-theme-light .hljs-title,
+.chat-ui-theme-light .hljs-section,
+.chat-ui-theme-light .hljs-attribute {
+  color: #16a34a;
+}
+
+.chat-ui-theme-light .hljs-comment,
+.chat-ui-theme-light .hljs-quote {
+  color: #a1a1aa;
+}
+
+.chat-ui-theme-light .hljs-number {
+  color: #d97706;
+}
+
+.chat-ui-theme-light .hljs-variable,
+.chat-ui-theme-light .hljs-params {
+  color: #2563eb;
+}

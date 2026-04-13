@@ -1,0 +1,29 @@
+/* ========================================
+   Unread Message Badge
+   ======================================== */
+
+.chat-ui-unread-badge {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  border-radius: var(--c-radius-full);
+  background: var(--c-primary);
+  color: white;
+  font-size: var(--c-font-size-xs);
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--c-shadow-lg);
+  z-index: 25;
+  transition: transform var(--c-transition-fast);
+}
+
+.chat-ui-unread-badge:hover {
+  transform: translateX(-50%) scale(1.05);
+}

@@ -1,0 +1,335 @@
+/* ========================================
+   Dev Controls — Collapsible Toolbar
+   ======================================== */
+
+/* ---- Floating Toggle FAB ---- */
+.dev-toggle-fab {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 9999;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(30, 30, 40, 0.85);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+}
+
+.dev-toggle-fab:hover {
+  background: rgba(40, 40, 55, 0.95);
+  color: #fff;
+  transform: scale(1.08);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.dev-toggle-fab:active {
+  transform: scale(0.95);
+}
+
+/* ---- Collapsible Panel ---- */
+.dev-controls-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.25s ease;
+  opacity: 0;
+}
+
+.dev-controls-panel--open {
+  max-height: 280px;
+  opacity: 1;
+}
+
+/* ---- Inner Wrapper ---- */
+.dev-controls-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 16px 12px;
+  background: rgba(18, 18, 24, 0.92);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 10px;
+  box-sizing: border-box;
+}
+
+/* ---- Row Groups ---- */
+.dev-controls-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.dev-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(139, 92, 246, 0.7);
+  min-width: 52px;
+  flex-shrink: 0;
+}
+
+/* ---- Buttons ---- */
+.dev-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.dev-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dev-btn:active {
+  transform: translateY(0);
+}
+
+.dev-btn.primary {
+  background: rgba(139, 92, 246, 0.25);
+  color: #c4b5fd;
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.dev-btn.primary:hover {
+  background: rgba(139, 92, 246, 0.4);
+  color: #fff;
+}
+
+.dev-btn.secondary {
+  background: rgba(59, 130, 246, 0.15);
+  color: #93c5fd;
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.dev-btn.secondary:hover {
+  background: rgba(59, 130, 246, 0.3);
+  color: #fff;
+}
+
+/* ---- Select ---- */
+.dev-select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 12px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.dev-select:focus {
+  border-color: rgba(139, 92, 246, 0.5);
+}
+
+.dev-select option {
+  background: #1e1e28;
+  color: #fff;
+}
+
+.dev-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 500;
+}
+
+/* ---- API Key Input ---- */
+.dev-api-key-input {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  width: 170px;
+  transition: border-color 0.2s;
+}
+
+.dev-api-key-input:focus {
+  outline: none;
+  border-color: rgba(139, 92, 246, 0.5);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 600px) {
+  .dev-toggle-fab {
+    top: 8px;
+    right: 8px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .dev-controls-panel--open {
+    max-height: 400px;
+  }
+
+  .dev-controls-wrapper {
+    padding: 10px 12px;
+  }
+
+  .dev-section-label {
+    min-width: 44px;
+  }
+
+  .dev-api-key-input,
+  .dev-select-model {
+    width: 130px;
+  }
+}
+
+.dev-select-model {
+  width: 180px;
+}
+
+/* ---- Key Manager Modal ---- */
+.dev-key-manager-container {
+  display: inline-block;
+}
+
+.dev-key-btn[data-active="true"] {
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.dev-key-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dev-key-modal {
+  width: 90vw;
+  max-width: 500px;
+  background: rgba(22, 22, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+}
+
+.dev-key-modal-header h3 {
+  margin: 0 0 12px 0;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.dev-key-modal-text {
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #aaa;
+  line-height: 1.5;
+}
+
+.dev-key-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  padding-right: 4px;
+}
+
+.dev-key-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dev-key-input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: #fff;
+  font-family: 'Geist Mono', monospace;
+  font-size: 13px;
+  padding: 10px 12px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.dev-key-input:focus {
+  outline: none;
+  border-color: rgba(139, 92, 246, 0.6);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+}
+
+.dev-icon-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #aaa;
+  border-radius: 6px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.dev-icon-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.dev-key-modal-actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 12px;
+}
+
+.dev-btn-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dev-key-modal-footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}

@@ -1,0 +1,18 @@
+/* ========================================
+   Dev Layout & Container
+   ======================================== */
+
+.dev-app-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: var(--c-bg);
+}
+
+.dev-chat-container {
+  flex: 1 1 0%;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+}

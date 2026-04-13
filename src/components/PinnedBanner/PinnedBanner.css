@@ -1,0 +1,52 @@
+/* ========================================
+   Pinned Message Banner
+   ======================================== */
+
+.chat-ui-pinned-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--c-surface-glass);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--c-surface-border);
+  cursor: pointer;
+  transition: background-color var(--c-transition-fast);
+  overflow: hidden;
+}
+
+.chat-ui-pinned-banner:hover {
+  background: var(--c-surface-elevated);
+}
+
+.chat-ui-pinned-icon {
+  color: var(--c-primary);
+  flex-shrink: 0;
+}
+
+.chat-ui-pinned-text {
+  flex: 1;
+  font-size: var(--c-font-size-sm);
+  color: var(--c-text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.85;
+}
+
+.chat-ui-pinned-count {
+  background: var(--c-primary);
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: var(--c-radius-full);
+  flex-shrink: 0;
+}
+
+.chat-ui-pinned-arrow {
+  color: var(--c-text-muted);
+  flex-shrink: 0;
+  opacity: 0.5;
+}

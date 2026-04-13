@@ -1,0 +1,115 @@
+/* ========================================
+   Message Search Bar
+   ======================================== */
+
+.chat-ui-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--c-surface-elevated);
+  border-bottom: 1px solid var(--c-surface-border);
+  animation: chat-ui-search-slide-in 0.15s ease-out;
+}
+
+@keyframes chat-ui-search-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chat-ui-search-input-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 8px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-surface-border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  transition: border-color 0.15s ease;
+}
+
+.chat-ui-search-input-wrapper:focus-within {
+  border-color: var(--c-primary);
+}
+
+.chat-ui-search-icon {
+  color: var(--c-text-muted);
+  flex-shrink: 0;
+}
+
+.chat-ui-search-input {
+  flex: 1;
+  border: none;
+  background: none;
+  color: var(--c-text-main);
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+  min-width: 0;
+}
+
+.chat-ui-search-input::placeholder {
+  color: var(--c-text-muted);
+  opacity: 0.6;
+}
+
+.chat-ui-search-count {
+  font-size: 12px;
+  color: var(--c-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.chat-ui-search-count.no-results {
+  color: var(--c-error, #ef4444);
+}
+
+.chat-ui-search-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.chat-ui-search-nav-btn,
+.chat-ui-search-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: none;
+  color: var(--c-text-muted);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.chat-ui-search-nav-btn:hover,
+.chat-ui-search-close-btn:hover {
+  background-color: var(--c-surface);
+  color: var(--c-text-main);
+}
+
+.chat-ui-search-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Highlight matched text in messages */
+.chat-ui-search-highlight {
+  background-color: rgba(250, 204, 21, 0.3);
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+.chat-ui-search-highlight.active {
+  background-color: rgba(250, 204, 21, 0.6);
+}

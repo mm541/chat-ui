@@ -1,0 +1,40 @@
+/* ========================================
+   Text-to-Speech Button
+   ======================================== */
+
+.chat-ui-tts-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--c-radius-full);
+  border: none;
+  background: transparent;
+  color: var(--c-text-muted);
+  cursor: pointer;
+  transition: all var(--c-transition-fast);
+  opacity: 0;
+  padding: 0;
+}
+
+.chat-ui-bubble-container.hovered .chat-ui-tts-btn {
+  opacity: 0.7;
+}
+
+.chat-ui-tts-btn:hover {
+  opacity: 1 !important;
+  color: var(--c-primary);
+  background: var(--c-primary-subtle);
+}
+
+.chat-ui-tts-btn.speaking {
+  opacity: 1 !important;
+  color: var(--c-primary);
+  animation: chat-ui-tts-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes chat-ui-tts-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}

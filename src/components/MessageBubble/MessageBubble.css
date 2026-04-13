@@ -1,0 +1,193 @@
+/* ========================================
+   Message Bubbles
+   ======================================== */
+
+.chat-ui-bubble-container {
+  display: flex;
+  width: 100%;
+}
+
+.chat-ui-bubble-container.consecutive .chat-ui-bubble-wrapper {
+  margin-top: -12px;
+}
+
+.chat-ui-bubble-wrapper {
+  display: flex;
+  flex: 1;
+  gap: 12px;
+  max-width: 100%;
+  padding: 4px 16px;
+}
+
+.chat-ui-bubble-content-col {
+  display: flex;
+  flex-direction: column;
+  max-width: 85%;
+  min-width: 0;
+}
+
+.chat-ui-bubble-wrapper.sent .chat-ui-bubble-content-col {
+  align-items: flex-end;
+  margin-left: auto;
+}
+
+.chat-ui-bubble-wrapper.received .chat-ui-bubble-content-col {
+  align-items: flex-start;
+  margin-right: auto;
+}
+
+.chat-ui-bubble-status {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+  opacity: 0.6;
+  font-size: var(--c-font-size-xs);
+}
+
+/* Streaming cursor */
+@keyframes chat-ui-cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.chat-ui-streaming-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background-color: currentColor;
+  vertical-align: middle;
+  animation: chat-ui-cursor-blink 1s step-end infinite;
+  margin-left: 2px;
+}
+
+.chat-ui-bubble-wrapper.received {
+  justify-content: flex-start;
+}
+
+.chat-ui-bubble {
+  padding: calc(var(--c-spacing) * 1.25) calc(var(--c-spacing) * 1.75);
+  border-radius: var(--c-radius-bubble);
+  line-height: 1.6;
+  word-wrap: break-word;
+  position: relative;
+  box-shadow: var(--c-shadow-sm);
+  transition: box-shadow var(--c-transition-smooth), transform var(--c-transition-smooth);
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.chat-ui-bubble-wrapper:hover .chat-ui-bubble {
+  box-shadow: var(--c-shadow-md);
+}
+
+/* Sent bubble — gradient with subtle depth */
+.chat-ui-bubble-wrapper.sent .chat-ui-bubble {
+  background: var(--c-bubble-sent);
+  color: var(--c-bubble-sent-text);
+  border-bottom-right-radius: 6px;
+  box-shadow: 0 2px 12px rgba(139, 92, 246, 0.2);
+}
+
+.chat-ui-bubble-wrapper.sent:hover .chat-ui-bubble {
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+}
+
+/* Received bubble — subtle border for definition */
+.chat-ui-bubble-wrapper.received .chat-ui-bubble {
+  background: var(--c-bubble-recv);
+  color: var(--c-bubble-recv-text);
+  border-bottom-left-radius: 6px;
+  border: 1px solid var(--c-surface-border);
+}
+
+/* System Messages */
+.chat-ui-system {
+  justify-content: center;
+  margin: 16px 0;
+  width: 100%;
+}
+
+.chat-ui-system-badge {
+  font-size: var(--c-font-size-xs);
+  font-weight: 500;
+  color: var(--c-text-muted);
+  background-color: var(--c-surface-glass);
+  padding: 5px 14px;
+  border-radius: var(--c-radius-full);
+  text-align: center;
+  border: 1px solid var(--c-surface-border);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+/* Thread Quotes */
+.chat-ui-quote-preview {
+  font-size: 0.85em;
+  opacity: 0.8;
+  padding: 6px 10px;
+  border-inline-start: 3px solid var(--c-primary);
+  background-color: var(--c-primary-subtle);
+  border-radius: 6px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background-color var(--c-transition-fast);
+}
+
+.chat-ui-quote-preview:hover {
+  background-color: rgba(139, 92, 246, 0.2);
+}
+
+/* Action Bars (reveal on hover — smooth opacity) */
+.chat-ui-action-bar-wrapper {
+  margin-top: 4px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity var(--c-transition-base), transform var(--c-transition-base);
+  pointer-events: none;
+}
+
+.chat-ui-bubble-container.hovered .chat-ui-action-bar-wrapper {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ========================================
+   Message Grouping (Asymmetric Radii)
+   ======================================== */
+
+/* First in group: flatten bottom corner */
+.chat-ui-bubble-wrapper.sent.group-first .chat-ui-bubble {
+  border-bottom-right-radius: 6px;
+}
+.chat-ui-bubble-wrapper.received.group-first .chat-ui-bubble {
+  border-bottom-left-radius: 6px;
+}
+
+/* Middle: flatten both corners */
+.chat-ui-bubble-wrapper.sent.group-middle .chat-ui-bubble {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.chat-ui-bubble-wrapper.received.group-middle .chat-ui-bubble {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+/* Last: flatten top corner, keep tail */
+.chat-ui-bubble-wrapper.sent.group-last .chat-ui-bubble {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 4px;
+}
+.chat-ui-bubble-wrapper.received.group-last .chat-ui-bubble {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 4px;
+}
+
+/* Tighter spacing for grouped messages */
+.chat-ui-bubble-container.group-middle .chat-ui-bubble-wrapper,
+.chat-ui-bubble-container.group-last .chat-ui-bubble-wrapper {
+  margin-top: -8px;
+}

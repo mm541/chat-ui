@@ -1,0 +1,112 @@
+/* ========================================
+   Message List / Virtualizer
+   ======================================== */
+
+.chat-ui-virtualizer-outer {
+  width: 100%;
+  position: relative;
+  height: var(--chat-virtualizer-height, 0px);
+}
+
+.chat-ui-virtualizer-row {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  transform: translateY(var(--chat-virtualizer-offset, 0px));
+  will-change: transform;
+  contain: layout style;
+}
+
+.chat-ui-message-list-container {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  scroll-behavior: smooth;
+}
+
+@supports (scrollbar-width: thin) {
+  .chat-ui-message-list-container {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+  }
+}
+
+.chat-ui-message-list-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.chat-ui-message-list-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-ui-message-list-container::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.chat-ui-message-list-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Empty State */
+.chat-ui-empty-state-wrapper {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  min-height: 100%;
+}
+
+/* Date Separators */
+.chat-ui-date-separator {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  position: relative;
+  z-index: 5;
+}
+
+/* Add subtle line through separator */
+.chat-ui-date-separator::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 24px;
+  right: 24px;
+  height: 1px;
+  background: var(--c-surface-border);
+  z-index: -1;
+}
+
+/* Scroll to Bottom FAB */
+.chat-ui-scroll-bottom-fab {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--c-surface-glass);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  color: var(--c-text-main);
+  border: 1px solid var(--c-surface-border);
+  box-shadow: var(--c-shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  transition: all var(--c-transition-base);
+}
+
+.chat-ui-scroll-bottom-fab:hover {
+  background-color: var(--c-surface-elevated);
+  transform: translateY(-2px);
+  box-shadow: var(--c-shadow-lg);
+}
+
+.chat-ui-scroll-bottom-fab:active {
+  transform: translateY(0);
+}

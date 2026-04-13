@@ -1,0 +1,86 @@
+/* ========================================
+   Bubble Metadata: Timestamps, Reactions, Edited
+   ======================================== */
+
+/* Footer row inside bubble */
+.chat-ui-bubble-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+/* Edited badge */
+.chat-ui-edited-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.65rem;
+  opacity: 0.5;
+  font-style: italic;
+}
+
+/* Hover timestamp — always rendered, visibility via opacity for no layout shift */
+.chat-ui-timestamp {
+  font-size: 0.7rem;
+  color: var(--c-text-muted);
+  padding: 2px 4px;
+  margin-top: 2px;
+  height: 18px;
+  opacity: 0;
+  transform: translateY(-2px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.chat-ui-timestamp.visible {
+  opacity: 0.55;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.chat-ui-timestamp.sent {
+  text-align: right;
+}
+
+/* Reactions bar */
+.chat-ui-reactions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.chat-ui-reaction-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 8px;
+  border-radius: var(--c-radius-full);
+  background-color: var(--c-surface-glass);
+  border: 1px solid var(--c-surface-border);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--c-text-main);
+}
+
+.chat-ui-reaction-badge:hover {
+  background-color: var(--c-surface-elevated);
+  transform: scale(1.05);
+}
+
+.chat-ui-reaction-badge.reacted {
+  border-color: var(--c-primary);
+  background-color: rgba(139, 92, 246, 0.15);
+}
+
+.chat-ui-reaction-badge span {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+/* Avatar clickable cursor */
+.chat-ui-avatar-clickable {
+  cursor: pointer;
+}

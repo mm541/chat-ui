@@ -1,0 +1,32 @@
+/* ========================================
+   Presence Indicator
+   ======================================== */
+
+.chat-ui-presence {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid var(--c-bg);
+  flex-shrink: 0;
+}
+
+.chat-ui-presence-online {
+  background-color: #22c55e;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+}
+
+.chat-ui-presence-away {
+  background-color: #f59e0b;
+  box-shadow: 0 0 6px rgba(245, 158, 11, 0.4);
+}
+
+.chat-ui-presence-busy {
+  background-color: #ef4444;
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.4);
+}
+
+.chat-ui-presence-offline {
+  background-color: var(--c-text-muted);
+  opacity: 0.5;
+}

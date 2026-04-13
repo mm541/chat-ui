@@ -1,0 +1,105 @@
+/* ========================================
+   Header Component
+   ======================================== */
+
+.chat-ui-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(var(--c-spacing) * 1.75) calc(var(--c-spacing) * 2.5);
+  background-color: var(--c-surface-glass);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--c-surface-border);
+  box-shadow: var(--c-shadow-sm);
+  z-index: 10;
+  position: relative;
+}
+
+/* Subtle gradient shimmer on header */
+.chat-ui-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--c-primary-subtle) 50%,
+    transparent 100%
+  );
+  opacity: 0.6;
+}
+
+.chat-ui-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chat-ui-header-avatar-default {
+  padding: 7px;
+  background: var(--c-bubble-sent);
+  border-radius: var(--c-radius-sm);
+  display: flex;
+  box-shadow: var(--c-shadow-glow);
+  transition: transform var(--c-transition-fast);
+}
+
+.chat-ui-header-avatar-default:hover {
+  transform: scale(1.08);
+}
+
+.chat-ui-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chat-ui-header-title {
+  font-weight: 650;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.chat-ui-header-subtitle {
+  font-size: var(--c-font-size-xs);
+  color: var(--c-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.chat-ui-header-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--c-success);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+  animation: chat-ui-pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes chat-ui-pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.85); }
+}
+
+/* Typing Indicator — positioned inside header or standalone */
+.chat-ui-typing-indicator {
+  display: flex;
+  gap: 5px;
+  padding: 12px 20px;
+  align-items: center;
+}
+
+.chat-ui-typing-dot {
+  width: 7px;
+  height: 7px;
+  background-color: var(--c-text-muted);
+  border-radius: 50%;
+  opacity: 0.6;
+}

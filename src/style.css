@@ -1,0 +1,31 @@
+/* ========================================
+   Chat UI — Modular Style Barrel
+   
+   Component CSS is co-located next to its
+   component file. This entry point imports
+   them in the correct cascade order.
+   ======================================== */
+
+@import './styles/tokens.css';                  /* Design tokens & theme variables */
+@import './styles/base.css';                    /* Root container setup */
+@import './components/Header/Header.css';
+@import './components/MessageList/MessageList.css';
+@import './components/MessageBubble/MessageBubble.css';
+@import './components/MessageBubble/MessageBubbleMeta.css';
+@import './components/Input/Input.css';
+@import './components/Markdown/Markdown.css';
+@import './components/Markdown/SyntaxHighlight.css';
+@import './components/MessageSearchBar/MessageSearchBar.css';
+@import './components/MessageContextMenu/MessageContextMenu.css';
+@import './components/MediaAttachments/MediaAttachments.css';
+@import './components/ImageLightbox/ImageLightbox.css';
+@import './components/ActionMenu/ActionMenu.css';
+@import './components/SuggestedReplies/SuggestedReplies.css';
+@import './components/VoiceInput/VoiceInput.css';
+@import './components/SlashCommands/SlashCommands.css';
+@import './components/TextToSpeech/TextToSpeech.css';
+@import './components/PinnedBanner/PinnedBanner.css';
+@import './components/UnreadBadge/UnreadBadge.css';
+@import './components/DropZone/DropZone.css';
+@import './components/PresenceIndicator/PresenceIndicator.css';
+@import './styles/responsive.css';              /* Container queries */
