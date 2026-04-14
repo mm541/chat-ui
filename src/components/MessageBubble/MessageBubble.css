@@ -191,3 +191,111 @@
 .chat-ui-bubble-container.group-last .chat-ui-bubble-wrapper {
   margin-top: -8px;
 }
+
+/* ========================================
+   Message Editing
+   ======================================== */
+
+.chat-ui-bubble-edit-btn {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  color: var(--c-text-muted);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.2s, transform 0.2s, background 0.2s;
+  box-shadow: var(--c-shadow-sm);
+}
+
+.chat-ui-bubble-container.hovered .chat-ui-bubble-edit-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.chat-ui-bubble-edit-btn:hover {
+  background: var(--c-surface-hover);
+  color: var(--c-text);
+}
+
+.chat-ui-message-edit-mode {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  min-width: 200px;
+}
+
+.chat-ui-message-edit-textarea {
+  width: 100%;
+  min-height: 80px;
+  background: transparent;
+  color: inherit;
+  border: none;
+  resize: vertical;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  outline: none;
+  padding: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.chat-ui-message-edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.chat-ui-message-edit-cancel,
+.chat-ui-message-edit-save {
+  padding: 4px 12px;
+  border-radius: var(--c-radius-full);
+  font-size: var(--c-font-size-xs);
+  cursor: pointer;
+  border: none;
+  font-weight: 500;
+  transition: opacity var(--c-transition-fast);
+}
+
+.chat-ui-message-edit-cancel {
+  background: transparent;
+  color: inherit;
+  opacity: 0.7;
+}
+
+.chat-ui-message-edit-cancel:hover {
+  opacity: 1;
+}
+
+.chat-ui-message-edit-save {
+  background: rgba(255, 255, 255, 0.2);
+  color: inherit;
+}
+
+.chat-ui-message-edit-save:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.chat-ui-message-edit-save:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.chat-ui-edited-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--c-font-size-xs);
+  opacity: 0.6;
+  margin-right: 8px;
+}

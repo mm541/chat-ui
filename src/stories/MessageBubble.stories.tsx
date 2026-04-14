@@ -3,6 +3,7 @@ import React from 'react';
 import { MessageBubble } from '../components/MessageBubble';
 import { ChatProvider } from '../context/ChatContext';
 import type { ChatMessage } from '../types';
+import './Stories.css';
 
 const meta: Meta<typeof MessageBubble> = {
   title: 'Components/MessageBubble',
@@ -10,8 +11,7 @@ const meta: Meta<typeof MessageBubble> = {
   decorators: [(Story) => (
     <ChatProvider messages={[]} onSendMessage={() => {}}>
       <div 
-        className="chat-ui-root" 
-        style={{ padding: '24px', maxWidth: '600px', background: 'var(--c-bg, #09090b)' }}
+        className="chat-ui-root sb-chat-wrapper" 
         onContextMenu={(e) => e.preventDefault()} // Context menu is custom
       >
         <Story />
@@ -91,12 +91,12 @@ export const CustomAttachmentRender: Story = {
       messages={[]} 
       onSendMessage={() => {}}
       renderAttachment={(att) => (
-        <div style={{ padding: '12px', background: 'purple', color: 'white', borderRadius: '8px' }}>
+        <div className="sb-custom-attachment">
           Custom Renderer: {att.name}
         </div>
       )}
     >
-      <div className="chat-ui-root" style={{ padding: '24px', maxWidth: '600px', background: 'var(--c-bg, #09090b)' }}>
+      <div className="chat-ui-root sb-chat-wrapper">
         <MessageBubble 
           message={{ 
             ...baseMsg, 
@@ -172,7 +172,7 @@ export const WithCustomClasses: Story = {
         timestamp: 'text-emerald-300 italic',
       }}
     >
-      <div className="chat-ui-root" style={{ padding: '24px', maxWidth: '600px', background: 'var(--c-bg, #09090b)' }}>
+      <div className="chat-ui-root sb-chat-wrapper">
         <MessageBubble message={{ ...baseMsg, sender: 'user', text: 'Custom themed bubble via global context injection.' }} />
       </div>
     </ChatProvider>

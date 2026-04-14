@@ -88,6 +88,9 @@ export interface ChatDictionary {
   statusFailed: string;
   messageFromUserAriaLabel: string;
   messageFromAgentAriaLabel: string;
+  editMessageAriaLabel: string;
+  saveEditAriaLabel: string;
+  cancelEditAriaLabel: string;
   // Menus & Commands
   slashCommandsAriaLabel: string;
   actionMenuOpenAriaLabel: string;
@@ -208,4 +211,10 @@ export interface ChatUIProps {
   renderSendButton?: (disabled: boolean, onClick: () => void) => React.ReactNode;
   /** Replace the default attach/paperclip button */
   renderAttachButton?: (onAttach: () => void) => React.ReactNode;
+
+  // Messaging behavior
+  /** Allow users to edit their sent messages. Displays an edit pencil on hover. */
+  allowEditing?: boolean;
+  /** Fired when a user successfully submits an edit for a message */
+  onEditMessage?: (messageId: string, newText: string) => void;
 }

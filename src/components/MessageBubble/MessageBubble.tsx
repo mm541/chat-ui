@@ -36,12 +36,22 @@ export const MessageBubble: React.FC<MessageBubbleProps> = React.memo(({
   groupPosition = 'single'
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [draftText, setDraftText] = useState(message.text || '');
+  
   const isSent = message.sender === 'user';
   const isSystem = message.sender === 'system';
   const context = useChat();
-  const { onMessageClick, onAvatarClick, onReaction, classNames } = context;
+  const { onMessageClick, onAvatarClick, onReaction, classNames, allowEditing, onEditMessage } = context;
   
   const isStreaming = message.status === 'streaming';
+
+  const handleSaveEdit = () => {
+    if (draftText.trim() !== message.text && onEditMessage) {
+      onEditMessage(message.id, draftText.trim());
+    }
+    setIsEditing(false);
+  };
   
   const renderedText = context.renderText 
     ? context.renderText(message.text || '', message) 
@@ -112,8 +122,42 @@ export const MessageBubble: React.FC<MessageBubbleProps> = React.memo(({
               </div>
             )}
             
-            {message.attachments && message.attachments.length > 0 && (
-              <MediaAttachments 
+            {allowEditing && isSent && isHovered && !isEditing && (
+              <button 
+                className="chat-ui-bubble-edit-btn" 
+                onClick={(e) => { e.stopPropagation(); setDraftText(message.text || ''); setIsEditing(true); }}
+                aria-label={context.dictionary.editMessageAriaLabel}
+              >
+                <Pencil size={12} />
+              </button>
+            )}
+
+            {isEditing ? (
+              <div className="chat-ui-message-edit-mode" onClick={(e) => e.stopPropagation()}>
+                <textarea 
+                  className="chat-ui-message-edit-textarea"
+                  value={draftText}
+                  onChange={(e) => setDraftText(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSaveEdit(); }
+                    if (e.key === 'Escape') { setIsEditing(false); }
+                  }}
+                  autoFocus
+                  aria-label="Edit message text"
+                />
+                <div className="chat-ui-message-edit-actions">
+                  <button onClick={() => setIsEditing(false)} className="chat-ui-message-edit-cancel">
+                    {context.dictionary.cancelEditAriaLabel || 'Cancel'}
+                  </button>
+                  <button onClick={handleSaveEdit} className="chat-ui-message-edit-save" disabled={draftText.trim() === ''}>
+                    {context.dictionary.saveEditAriaLabel || 'Save'}
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <>
+                {message.attachments && message.attachments.length > 0 && (
+                  <MediaAttachments 
                 attachments={message.attachments} 
                 onImageClick={context.disableImageLightbox ? undefined : (idx: number) => {
                   const images = message.attachments?.filter(a => a.type === 'image') || [];
@@ -124,6 +168,8 @@ export const MessageBubble: React.FC<MessageBubbleProps> = React.memo(({
 
             {renderedText}
             {isStreaming && <span className="chat-ui-streaming-cursor" />}
+              </>
+            )}
             
             <div className="chat-ui-bubble-footer">
               {message.isEdited && (

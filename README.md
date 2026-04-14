@@ -97,6 +97,8 @@ export default function App() {
 | `className` | `string` | — | Root container class |
 | `classNames` | `ChatClassNames` | — | Per-element class overrides (e.g. Tailwind) |
 | `dictionary` | `Partial<ChatDictionary>`| — | UI string overrides for Localization (i18n) |
+| `allowEditing` | `boolean` | `false` | Enable inline message editing (pencil icon on hover) |
+| `onEditMessage` | `(id: string, text: string) => void` | — | Fires when user successfully saves an edited message |
 | `onInputChange` | `(text: string) => void` | — | Fires on every keystroke in the input |
 | `maxInputLength` | `number` | — | Max characters. Disables send + shows red when exceeded |
 | `showCharacterCount` | `boolean` | `false` | Show a `[45/500]` counter near the send button |

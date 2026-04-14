@@ -1,0 +1,15 @@
+/* Shared styles for Storybook wrappers */
+.sb-chat-wrapper {
+  padding: 24px;
+  max-width: 600px;
+  background: var(--c-bg, #09090b);
+  border-radius: 8px; /* Optional slight rounding for presentation */
+  margin: 0 auto;
+}
+
+.sb-custom-attachment {
+  padding: 12px;
+  background: purple;
+  color: white;
+  border-radius: 8px;
+}

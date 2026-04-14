@@ -29,6 +29,9 @@ export const defaultDictionary: ChatDictionary = {
   statusFailed: "failed",
   messageFromUserAriaLabel: "Message from you",
   messageFromAgentAriaLabel: "Message from the assistant",
+  editMessageAriaLabel: "Edit message",
+  saveEditAriaLabel: "Save changes",
+  cancelEditAriaLabel: "Cancel editing",
   slashCommandsAriaLabel: "Slash commands",
   actionMenuOpenAriaLabel: "Open action menu",
   actionMenuCloseAriaLabel: "Close action menu",
@@ -52,7 +55,8 @@ export interface ChatContextValue {
   messages: ChatMessage[];
   onSendMessage: (text: string) => void;
   onFileUpload?: (files: FileList) => void;
-  onEditMessage?: (message: ChatMessage) => void;
+  onEditMessage?: (messageId: string, newText: string) => void;
+  allowEditing?: boolean;
   onDeleteMessage?: (message: ChatMessage) => void;
   onReaction?: (message: ChatMessage, emoji: string) => void;
   onMessageClick?: (message: ChatMessage) => void;
@@ -148,6 +152,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({
   onMessageClick,
   onAvatarClick,
   onEditMessage,
+  allowEditing,
   onDeleteMessage,
   onReaction,
   renderMessage,
@@ -228,6 +233,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({
       onMessageClick,
       onAvatarClick,
       onEditMessage,
+      allowEditing,
       onDeleteMessage,
       onReaction,
       renderMessage, 

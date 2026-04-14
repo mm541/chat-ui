@@ -194,7 +194,6 @@ export const ChatInput: React.FC<ChatInputProps> = ({
             className={clsx("chat-ui-textarea", classNames?.textarea, isOverLimit && 'chat-ui-textarea-over-limit')}
             rows={1}
             aria-label={context.dictionary.inputPlaceholder}
-            aria-invalid={isOverLimit ? 'true' : undefined}
             maxLength={undefined} // We handle validation ourselves for UX
           />
         </div>

@@ -42,8 +42,6 @@ export const MediaAttachments: React.FC<MediaAttachmentsProps> = ({
               key={img.id}
               className={clsx('chat-ui-media-img-container', classNames?.attachmentItem)}
               onClick={() => onImageClick?.(idx, img)}
-              role={onImageClick ? 'button' : undefined}
-              tabIndex={onImageClick ? 0 : undefined}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();

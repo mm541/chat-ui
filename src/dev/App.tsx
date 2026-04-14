@@ -62,6 +62,15 @@ export const App = () => {
 
   const { sendToGemini } = useGeminiChat({ apiKey: geminiApiKey, model: modelId, messages, setMessages });
 
+  const handleEditMessage = (id: string, newText: string) => {
+    setMessages((prev) => 
+      prev.map(msg => 
+        msg.id === id 
+          ? { ...msg, text: newText, isEdited: true } 
+          : msg
+      )
+    );
+  };
 
   // Sync API key to local storage
   useEffect(() => {
@@ -225,6 +234,8 @@ export const App = () => {
           onInputChange={(text) => console.log('[onInputChange]', text.length, 'chars')}
           maxInputLength={500}
           showCharacterCount
+          allowEditing
+          onEditMessage={handleEditMessage}
         />
       </div>
     </div>

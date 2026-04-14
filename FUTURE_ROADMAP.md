@@ -22,6 +22,7 @@ These are table-stakes features users expect from a modern chat library.
 Features that differentiate Chat UI from other libraries.
 
 - [ ] **Threaded Replies Panel** — Click a reply quote → slides open a side-panel (or inline expandable) showing the full thread branch. Prop: `threadView: 'panel' | 'inline' | 'none'`. Overridable via `renderThread`.
+- [ ] **Message Editing** — Native support for switching a past message bubble back into a text input state to edit typos, complete with an "Edited" flag on the bubble. Prop: `onEditMessage`.
 - [ ] **Multi-Select Mode** — Long-press or checkbox toggle enters selection mode. Batch actions: forward, delete, copy. Props: `enableMultiSelect`, `onBatchAction`. Overridable via `renderSelectionToolbar`.
 - [ ] **Unread Separator** — Auto-inserted "N new messages" divider line when the user is scrolled up and new messages arrive. Clicking it scrolls to the first unread. Prop: `unreadCount`, `firstUnreadId`.
 - [ ] **Drag-to-Reply (Mobile)** — Swipe-right gesture on a message bubble to quote-reply. Haptic feedback on threshold. Prop: `enableSwipeReply: boolean`.
@@ -36,7 +37,7 @@ Micro-interactions and visual touches that make the experience feel premium.
 - [ ] **Chat Bubble Tails** — Optional SVG bubble tails (iMessage-style) as a style variant. Prop: `bubbleStyle: 'rounded' | 'tailed'`.
 - [ ] **Confetti / Particle Reactions** — Tapping a reaction triggers a brief particle burst animation around the emoji. Uses lightweight canvas particles.
 - [ ] **Skeleton Loading State** — Shimmer placeholder UI while messages are being fetched. Prop: `isLoading: boolean`. Overridable via `renderLoadingSkeleton`.
-- [ ] **Read Receipts** — Double-check marks (✓✓) with sent/delivered/read states and color transitions (gray → blue). Already partially supported via `message.status`; needs visual implementation and animation.
+- [ ] **Message Lifecycle States** — Explicit rendering of message progression (`sending`, `delivered`, `read`, `error`). Include accompanying UX, like double-check marks (✓✓) or a "retry" button for failed messages. Overridable via `renderMessageStatus`.
 
 ---
 
@@ -47,6 +48,7 @@ Micro-interactions and visual touches that make the experience feel premium.
 - [ ] **Chromatic / Visual Regression** — Connect Storybook to Chromatic for automated screenshot diffing on PRs.
 - [ ] **Bundle Size Monitoring** — Add `size-limit` or `bundlewatch` to CI to prevent regressions (current: 36.74 KB JS, 28.19 KB CSS).
 - [ ] **Tree-Shaking Audit** — Verify individual component imports work (`import { MarkdownText } from 'chat-ui'`) without pulling the entire bundle.
+- [ ] **DOM Virtualization** — Replace the pure CSS flex layout with a virtualized list (e.g., `react-virtuoso`) to support high-performance rendering of 5,000+ messages without UI lag.
 
 ---
 
