@@ -22,7 +22,7 @@ These are table-stakes features users expect from a modern chat library.
 Features that differentiate Chat UI from other libraries.
 
 - [ ] **Threaded Replies Panel** — Click a reply quote → slides open a side-panel (or inline expandable) showing the full thread branch. Prop: `threadView: 'panel' | 'inline' | 'none'`. Overridable via `renderThread`.
-- [ ] **Message Editing** — Native support for switching a past message bubble back into a text input state to edit typos, complete with an "Edited" flag on the bubble. Prop: `onEditMessage`.
+- [x] **Message Editing** — Native support for switching a past message bubble back into a text input state to edit typos, complete with an "Edited" flag on the bubble. Prop: `onEditMessage`.
 - [ ] **Multi-Select Mode** — Long-press or checkbox toggle enters selection mode. Batch actions: forward, delete, copy. Props: `enableMultiSelect`, `onBatchAction`. Overridable via `renderSelectionToolbar`.
 - [ ] **Unread Separator** — Auto-inserted "N new messages" divider line when the user is scrolled up and new messages arrive. Clicking it scrolls to the first unread. Prop: `unreadCount`, `firstUnreadId`.
 - [ ] **Drag-to-Reply (Mobile)** — Swipe-right gesture on a message bubble to quote-reply. Haptic feedback on threshold. Prop: `enableSwipeReply: boolean`.
