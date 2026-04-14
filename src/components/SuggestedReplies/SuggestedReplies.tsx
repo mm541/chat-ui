@@ -1,24 +1,28 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { clsx } from 'clsx';
 import type { SuggestedReply } from '../../types';
 
 export interface SuggestedRepliesProps {
   suggestions: SuggestedReply[];
   onSelect: (suggestion: SuggestedReply) => void;
   className?: string;
+  /** Injected className for individual chips */
+  chipClassName?: string;
 }
 
 export const SuggestedReplies: React.FC<SuggestedRepliesProps> = ({
   suggestions,
   onSelect,
   className,
+  chipClassName,
 }) => {
   if (!suggestions || suggestions.length === 0) return null;
 
   return (
     <AnimatePresence>
       <motion.div
-        className={`chat-ui-suggestions ${className || ''}`}
+        className={clsx('chat-ui-suggestions', className)}
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 10 }}
@@ -27,7 +31,7 @@ export const SuggestedReplies: React.FC<SuggestedRepliesProps> = ({
         {suggestions.map((s, idx) => (
           <motion.button
             key={s.id}
-            className="chat-ui-suggestion-chip"
+            className={clsx('chat-ui-suggestion-chip', chipClassName)}
             onClick={() => onSelect(s)}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}

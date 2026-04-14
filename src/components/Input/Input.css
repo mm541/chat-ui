@@ -124,3 +124,24 @@
   cursor: not-allowed;
   box-shadow: none;
 }
+
+/* Character Counter */
+.chat-ui-char-counter {
+  font-size: 11px;
+  color: var(--c-text-muted);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  padding: 0 2px;
+  align-self: center;
+  transition: color var(--c-transition-base);
+}
+
+.chat-ui-char-counter.over-limit {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+/* Over-limit textarea */
+.chat-ui-textarea-over-limit {
+  color: #ef4444;
+}

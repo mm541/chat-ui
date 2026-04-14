@@ -25,6 +25,9 @@ export const ChatInput: React.FC<ChatInputProps> = ({
     inputActions, renderActionMenu, showActionBar,
     enableVoiceInput, voiceInputLocale, onVoiceTranscript, renderVoiceButton,
     slashCommands, onSlashCommand, renderSlashMenu,
+    // Phase 4: Deeper Customization
+    onInputChange, maxInputLength, showCharacterCount,
+    renderSendButton, renderAttachButton,
   } = context;
 
   const [text, setText] = React.useState('');
@@ -36,6 +39,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
     commands: slashCommands || [],
     onSelect: (cmd) => {
       setText('');
+      cmd.action?.();
       onSlashCommand?.(cmd);
     },
   });
@@ -47,8 +51,11 @@ export const ChatInput: React.FC<ChatInputProps> = ({
     }
   }, [text]);
 
+  const isOverLimit = maxInputLength != null && text.length > maxInputLength;
+  const isSendDisabled = disabled || !text.trim() || isOverLimit;
+
   const handleSend = () => {
-    if (text.trim() && !disabled) {
+    if (text.trim() && !disabled && !isOverLimit) {
       onSend(text.trim());
       setText('');
       if (textareaRef.current) {
@@ -70,6 +77,8 @@ export const ChatInput: React.FC<ChatInputProps> = ({
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const val = e.target.value;
     setText(val);
+    // Fire consumer callback
+    onInputChange?.(val);
     // Detect slash commands
     if (slashCommands && slashCommands.length > 0) {
       slash.handleInputChange(val);
@@ -108,6 +117,20 @@ export const ChatInput: React.FC<ChatInputProps> = ({
     textareaRef.current?.focus();
   };
 
+  // File attach trigger (shared between default and custom)
+  const triggerFileAttach = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.multiple = true;
+    input.onchange = (e) => {
+      const target = e.target as HTMLInputElement;
+      if (target.files && target.files.length > 0) {
+        onFileUpload?.(target.files);
+      }
+    };
+    input.click();
+  };
+
   // Determine what to render for the left-side action area
   const shouldShowActionMenu = inputActions && inputActions.length > 0 && showActionBar !== false;
 
@@ -120,24 +143,18 @@ export const ChatInput: React.FC<ChatInputProps> = ({
       return <ActionMenu actions={inputActions!} renderActionMenu={renderActionMenu} />;
     }
 
+    // Custom attach button render slot
+    if (renderAttachButton) {
+      return renderAttachButton(triggerFileAttach);
+    }
+
     // Fallback: simple paperclip file upload button
       return (
       <button 
         className={clsx("chat-ui-action-btn", context.classNames?.actionButton)} 
         aria-label={context.dictionary.attachFileAriaLabel} 
         title={context.dictionary.attachFileAriaLabel} 
-        onClick={() => {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.multiple = true;
-        input.onchange = (e) => {
-          const target = e.target as HTMLInputElement;
-          if (target.files && target.files.length > 0) {
-            onFileUpload?.(target.files);
-          }
-        };
-        input.click();
-      }}>
+        onClick={triggerFileAttach}>
         <Paperclip size={20} />
       </button>
     );
@@ -151,7 +168,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         </div>
       )}
       <div 
-        className={clsx("chat-ui-input-area", isDragging ? 'chat-ui-dragging' : '')}
+        className={clsx("chat-ui-input-area", classNames?.inputArea, isDragging ? 'chat-ui-dragging' : '')}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -174,11 +191,20 @@ export const ChatInput: React.FC<ChatInputProps> = ({
             onPaste={handlePaste}
             placeholder={isDragging ? context.dictionary.inputPlaceholderDragging : (placeholder || context.dictionary.inputPlaceholder)}
             disabled={disabled}
-            className={clsx("chat-ui-textarea", classNames?.textarea)}
+            className={clsx("chat-ui-textarea", classNames?.textarea, isOverLimit && 'chat-ui-textarea-over-limit')}
             rows={1}
             aria-label={context.dictionary.inputPlaceholder}
+            aria-invalid={isOverLimit ? 'true' : undefined}
+            maxLength={undefined} // We handle validation ourselves for UX
           />
         </div>
+
+        {/* Character counter */}
+        {(showCharacterCount || (maxInputLength != null && text.length > 0)) && (
+          <span className={clsx('chat-ui-char-counter', isOverLimit && 'over-limit')}>
+            {text.length}{maxInputLength != null ? `/${maxInputLength}` : ''}
+          </span>
+        )}
 
         {/* Voice input button */}
         {enableVoiceInput && (
@@ -189,15 +215,24 @@ export const ChatInput: React.FC<ChatInputProps> = ({
           />
         )}
 
-        <button 
-          className={clsx("chat-ui-send-btn", context.classNames?.sendButton)} 
-          onClick={handleSend}
-          disabled={disabled || !text.trim()}
-          aria-label={context.dictionary.sendButtonAriaLabel}
-          title={context.dictionary.sendButtonAriaLabel}
-        >
-          <Send size={20} />
-        </button>
+        {/* Send button — custom or default */}
+        {renderSendButton ? (
+          renderSendButton(isSendDisabled, handleSend)
+        ) : (
+          <button 
+            className={clsx(
+              "chat-ui-send-btn", 
+              context.classNames?.sendButton,
+              !isSendDisabled && context.classNames?.sendButtonActive,
+            )} 
+            onClick={handleSend}
+            disabled={isSendDisabled}
+            aria-label={context.dictionary.sendButtonAriaLabel}
+            title={context.dictionary.sendButtonAriaLabel}
+          >
+            <Send size={20} />
+          </button>
+        )}
       </div>
     </div>
   );

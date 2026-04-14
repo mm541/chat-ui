@@ -15,7 +15,7 @@ export const MediaAttachments: React.FC<MediaAttachmentsProps> = ({
   onImageClick,
   className,
 }) => {
-  const { renderAttachment } = useChat();
+  const { renderAttachment, classNames } = useChat();
 
   if (!attachments || attachments.length === 0) return null;
 
@@ -40,7 +40,7 @@ export const MediaAttachments: React.FC<MediaAttachmentsProps> = ({
           {images.slice(0, 4).map((img, idx) => (
             <div
               key={img.id}
-              className="chat-ui-media-img-container"
+              className={clsx('chat-ui-media-img-container', classNames?.attachmentItem)}
               onClick={() => onImageClick?.(idx, img)}
               role={onImageClick ? 'button' : undefined}
               tabIndex={onImageClick ? 0 : undefined}
@@ -67,7 +67,7 @@ export const MediaAttachments: React.FC<MediaAttachmentsProps> = ({
       {others.length > 0 && (
         <div className="chat-ui-media-files">
           {others.map((file) => (
-            <div key={file.id} className="chat-ui-media-file-item">
+            <div key={file.id} className={clsx('chat-ui-media-file-item', classNames?.attachmentItem)}>
               {renderAttachment ? (
                 renderAttachment(file)
               ) : (

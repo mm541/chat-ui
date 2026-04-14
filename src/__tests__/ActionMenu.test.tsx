@@ -1,7 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 import { ActionMenu } from '../components/ActionMenu';
+import { ChatProvider } from '../context/ChatContext';
 import type { ChatInputAction } from '../types';
 
 const createActions = (overrides: Partial<ChatInputAction>[] = []): ChatInputAction[] => [
@@ -10,20 +12,26 @@ const createActions = (overrides: Partial<ChatInputAction>[] = []): ChatInputAct
   { id: 'voice', label: 'Voice', icon: <span data-testid="icon-voice">🎤</span>, onClick: vi.fn(), disabled: true, ...overrides[2] },
 ];
 
+const Wrapper = ({ children }: { children: React.ReactNode }) => (
+  <ChatProvider messages={[]} onSendMessage={() => {}}>
+    {children}
+  </ChatProvider>
+);
+
 describe('ActionMenu', () => {
   it('renders the trigger button', () => {
-    render(<ActionMenu actions={createActions()} />);
+    render(<ActionMenu actions={createActions()} />, { wrapper: Wrapper });
     const trigger = screen.getByLabelText('Open action menu');
     expect(trigger).toBeInTheDocument();
   });
 
   it('does not show popover initially', () => {
-    render(<ActionMenu actions={createActions()} />);
+    render(<ActionMenu actions={createActions()} />, { wrapper: Wrapper });
     expect(screen.queryByText('Photo')).not.toBeInTheDocument();
   });
 
   it('shows popover when trigger is clicked', async () => {
-    render(<ActionMenu actions={createActions()} />);
+    render(<ActionMenu actions={createActions()} />, { wrapper: Wrapper });
     fireEvent.click(screen.getByLabelText('Open action menu'));
     await waitFor(() => {
       expect(screen.getByText('Photo')).toBeInTheDocument();
@@ -33,7 +41,7 @@ describe('ActionMenu', () => {
   });
 
   it('trigger aria-expanded toggles', () => {
-    render(<ActionMenu actions={createActions()} />);
+    render(<ActionMenu actions={createActions()} />, { wrapper: Wrapper });
     const trigger = screen.getByLabelText('Open action menu');
     expect(trigger).toHaveAttribute('aria-expanded', 'false');
 
@@ -44,7 +52,7 @@ describe('ActionMenu', () => {
 
   it('calls onClick when an action is clicked', async () => {
     const actions = createActions();
-    render(<ActionMenu actions={actions} />);
+    render(<ActionMenu actions={actions} />, { wrapper: Wrapper });
     fireEvent.click(screen.getByLabelText('Open action menu'));
 
     await waitFor(() => screen.getByText('Photo'));
@@ -54,7 +62,7 @@ describe('ActionMenu', () => {
   });
 
   it('closes the popover after clicking an action', async () => {
-    render(<ActionMenu actions={createActions()} />);
+    render(<ActionMenu actions={createActions()} />, { wrapper: Wrapper });
     fireEvent.click(screen.getByLabelText('Open action menu'));
 
     await waitFor(() => screen.getByText('Photo'));
@@ -67,7 +75,7 @@ describe('ActionMenu', () => {
 
   it('does not fire onClick for disabled actions', async () => {
     const actions = createActions();
-    render(<ActionMenu actions={actions} />);
+    render(<ActionMenu actions={actions} />, { wrapper: Wrapper });
     fireEvent.click(screen.getByLabelText('Open action menu'));
 
     await waitFor(() => screen.getByText('Voice'));
@@ -76,7 +84,7 @@ describe('ActionMenu', () => {
   });
 
   it('closes on Escape key', async () => {
-    render(<ActionMenu actions={createActions()} />);
+    render(<ActionMenu actions={createActions()} />, { wrapper: Wrapper });
     fireEvent.click(screen.getByLabelText('Open action menu'));
 
     await waitFor(() => screen.getByText('Photo'));
@@ -89,10 +97,10 @@ describe('ActionMenu', () => {
 
   it('closes on outside click', async () => {
     render(
-      <div>
+      <Wrapper>
         <div data-testid="outside">Outside</div>
         <ActionMenu actions={createActions()} />
-      </div>
+      </Wrapper>
     );
     fireEvent.click(screen.getByLabelText('Open action menu'));
     await waitFor(() => screen.getByText('Photo'));
@@ -109,7 +117,7 @@ describe('ActionMenu', () => {
       <div data-testid="custom-menu">Custom {actions.length}</div>
     ));
 
-    render(<ActionMenu actions={createActions()} renderActionMenu={customRender} />);
+    render(<ActionMenu actions={createActions()} renderActionMenu={customRender} />, { wrapper: Wrapper });
     fireEvent.click(screen.getByLabelText('Open action menu'));
 
     await waitFor(() => {
@@ -122,7 +130,7 @@ describe('ActionMenu', () => {
     const actions: ChatInputAction[] = [
       { id: 'cam', label: 'Camera', icon: <span>📷</span>, onClick: vi.fn(), description: 'Take a photo' },
     ];
-    render(<ActionMenu actions={actions} />);
+    render(<ActionMenu actions={actions} />, { wrapper: Wrapper });
     fireEvent.click(screen.getByLabelText('Open action menu'));
 
     await waitFor(() => {

@@ -9,7 +9,7 @@ import type { SuggestedReply } from '../../types';
  */
 export const SuggestedRepliesConnected: React.FC = () => {
   const ctx = useChat();
-  const { suggestions: propSuggestions, onSuggestionClick, renderSuggestions, onSendMessage, messages } = ctx;
+  const { suggestions: propSuggestions, onSuggestionClick, renderSuggestions, onSendMessage, messages, classNames } = ctx;
 
   // Get suggestions from either the prop or the last agent message
   const lastAgentMsg = [...messages].reverse().find((m) => m.sender === 'agent');
@@ -29,5 +29,12 @@ export const SuggestedRepliesConnected: React.FC = () => {
     return <>{renderSuggestions(activeSuggestions, handleClick)}</>;
   }
 
-  return <SuggestedReplies suggestions={activeSuggestions} onSelect={handleClick} />;
+  return (
+    <SuggestedReplies 
+      suggestions={activeSuggestions} 
+      onSelect={handleClick} 
+      className={classNames?.suggestedRepliesBar}
+      chipClassName={classNames?.suggestedReply}
+    />
+  );
 };

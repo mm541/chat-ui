@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 import { MessageBubble } from '../components/MessageBubble';
 import { ChatInput } from '../components/Input';
 import { ChatProvider } from '../context/ChatContext';
@@ -50,7 +51,7 @@ describe('Accessibility — ARIA Roles & Attributes', () => {
   // Input
   it('textarea has aria-label', () => {
     wrap(<ChatInput />);
-    const textarea = screen.getByLabelText('Chat input message');
+    const textarea = screen.getByLabelText('Type a message...');
     expect(textarea).toBeInTheDocument();
   });
 

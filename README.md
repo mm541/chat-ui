@@ -153,11 +153,24 @@ const { isListening, isSupported, transcript, start, stop, toggle } = useVoiceIn
 <ChatUI
   slashCommands={[
     { id: '1', label: 'Generate Image', shortcut: '/image', description: 'Create an image from a prompt' },
-    { id: '2', label: 'Write Code', shortcut: '/code', icon: <Code size={16} /> },
+    { id: '2', label: 'Clear Chat', shortcut: '/clear', icon: <Trash size={16} />, action: () => setMessages([]) },
   ]}
   onSlashCommand={(cmd) => console.log('Command:', cmd.shortcut)}
   // OR: renderSlashMenu={(commands, selectedIndex, onSelect) => <MyMenu ... />}
 />
+```
+
+**Type:**
+```ts
+interface SlashCommand {
+  id: string;
+  label: string;
+  shortcut: string;
+  description?: string;
+  icon?: React.ReactNode;
+  /** Optional custom behavior defined per-command */
+  action?: () => void;
+}
 ```
 
 **Headless hook:**

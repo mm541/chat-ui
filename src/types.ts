@@ -27,11 +27,12 @@ export interface SlashCommand {
   description?: string;
   icon?: React.ReactNode;
   shortcut: string; // e.g. "/image"
+  action?: () => void; // Optional custom behavior defined per-command
 }
 
 export type PresenceStatus = 'online' | 'offline' | 'away' | 'busy';
 
-export interface ChatMessage {
+export interface ChatMessage<TMeta = Record<string, unknown>> {
   id: string;
   text?: string;
   payload?: any; // For custom rich media (images, forms, etc.)
@@ -44,9 +45,28 @@ export interface ChatMessage {
   isEdited?: boolean;
   isPinned?: boolean;
   suggestions?: SuggestedReply[];
+  /** Arbitrary consumer-defined metadata (avatar URLs, thread IDs, etc.) */
+  meta?: TMeta;
 }
 
-export type ChatTheme = 'dark' | 'light' | Record<string, string>;
+/** Typed CSS design tokens for theme customization with IDE autocomplete */
+export interface ChatTokens {
+  '--c-primary'?: string;
+  '--c-bg'?: string;
+  '--c-surface'?: string;
+  '--c-surface-alt'?: string;
+  '--c-border'?: string;
+  '--c-text'?: string;
+  '--c-text-muted'?: string;
+  '--c-sent-bg'?: string;
+  '--c-received-bg'?: string;
+  '--c-bubble-radius'?: string;
+  '--font-family'?: string;
+  '--chat-input-radius'?: string;
+  [key: `--${string}`]: string | undefined;
+}
+
+export type ChatTheme = 'dark' | 'light' | ChatTokens;
 
 export interface ChatDictionary {
   // Input
@@ -96,6 +116,7 @@ export interface ChatClassNames {
   chatRoot?: string;
   messageList?: string;
   inputContainer?: string;
+  inputArea?: string;
   textarea?: string;
   // Header
   header?: string;
@@ -106,13 +127,21 @@ export interface ChatClassNames {
   bubble?: string;
   bubbleSent?: string;
   bubbleReceived?: string;
+  systemMessage?: string;
   timestamp?: string;
   editedBadge?: string;
+  reactionBadge?: string;
   // Input components
   inputToolbar?: string;
   sendButton?: string;
+  sendButtonActive?: string;
   voiceButton?: string;
   actionButton?: string;
+  // Suggestions
+  suggestedRepliesBar?: string;
+  suggestedReply?: string;
+  // Media
+  attachmentItem?: string;
   // Add-on Features
   slashMenu?: string;
   slashMenuItem?: string;
@@ -165,4 +194,18 @@ export interface ChatUIProps {
   renderActionMenu?: (actions: ChatInputAction[], isOpen: boolean, onClose: () => void) => React.ReactNode;
   /** Set to false to hide the "+" action button entirely. Default: true when inputActions is provided */
   showActionBar?: boolean;
+
+  // Input behavior
+  /** Fires on every keystroke in the input textarea */
+  onInputChange?: (text: string) => void;
+  /** Maximum character count. Disables send when exceeded */
+  maxInputLength?: number;
+  /** Show a character counter near the send button */
+  showCharacterCount?: boolean;
+
+  // Granular render slots
+  /** Replace the default send button */
+  renderSendButton?: (disabled: boolean, onClick: () => void) => React.ReactNode;
+  /** Replace the default attach/paperclip button */
+  renderAttachButton?: (onAttach: () => void) => React.ReactNode;
 }

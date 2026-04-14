@@ -155,6 +155,7 @@ export const App = () => {
     { id: 'sc-code', label: 'Write Code', description: 'Generate code in any language', shortcut: '/code', icon: <Code size={16} /> },
     { id: 'sc-explain', label: 'Explain', description: 'Explain the selected topic simply', shortcut: '/explain', icon: <Sparkles size={16} /> },
     { id: 'sc-search', label: 'Search Web', description: 'Search the web for information', shortcut: '/search', icon: <Search size={16} /> },
+    { id: 'sc-clear', label: 'Clear Chat', description: 'Delete all messages in the current session', shortcut: '/clear', icon: <BarChart3 size={16} />, action: () => setMessages([]) },
   ];
 
   const handleSlashCommand = (cmd: SlashCommand) => {
@@ -220,6 +221,10 @@ export const App = () => {
           enableTTS
           headerTitle="Luminescent AI"
           headerSubtitle="Online"
+          // --- Phase 4: Deeper Customization ---
+          onInputChange={(text) => console.log('[onInputChange]', text.length, 'chars')}
+          maxInputLength={500}
+          showCharacterCount
         />
       </div>
     </div>

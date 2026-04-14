@@ -122,6 +122,13 @@ export interface ChatContextValue {
 
   renderDropZone?: (isDragging: boolean) => React.ReactNode;
   dropZoneText?: string;
+
+  // Phase 4: Deeper Customization
+  onInputChange?: (text: string) => void;
+  maxInputLength?: number;
+  showCharacterCount?: boolean;
+  renderSendButton?: (disabled: boolean, onClick: () => void) => React.ReactNode;
+  renderAttachButton?: (onAttach: () => void) => React.ReactNode;
 }
 
 const ChatContext = createContext<ChatContextValue | undefined>(undefined);
@@ -190,6 +197,12 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({
   renderPresence,
   showUnreadBadge,
   renderUnreadBadge,
+  // Phase 4
+  onInputChange,
+  maxInputLength,
+  showCharacterCount,
+  renderSendButton,
+  renderAttachButton,
 }) => {
   const [lightboxImages, setLightboxImages] = useState<ChatMessageAttachment[]>([]);
   const [lightboxIndex, setLightboxIndex] = useState(0);
@@ -263,8 +276,13 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({
       renderPresence,
       showUnreadBadge,
       renderUnreadBadge,
+      onInputChange,
+      maxInputLength,
+      showCharacterCount,
+      renderSendButton,
+      renderAttachButton,
     }),
-    [messages, isTyping, onSendMessage, onFileUpload, onMessageClick, onAvatarClick, onEditMessage, onDeleteMessage, onReaction, renderMessage, renderMessageActions, renderText, renderQuotePreview, renderAvatar, renderInputActions, renderInputToolbar, renderEmptyState, renderDateSeparator, renderHeader, renderTimestamp, renderReactions, renderAttachment, disableImageLightbox, showTimestampOnHover, theme, mergedDictionary, placeholder, classNames, clusterTimeWindow, markdownRehypePlugins, openLightbox, inputActions, renderActionMenu, showActionBar, suggestions, onSuggestionClick, renderSuggestions, enableVoiceInput, voiceInputLocale, onVoiceTranscript, renderVoiceButton, slashCommands, onSlashCommand, renderSlashMenu, enableTTS, ttsVoice, ttsRate, renderTTSButton, onPinMessage, renderPinnedBanner, renderDropZone, dropZoneText, presence, renderPresence, showUnreadBadge, renderUnreadBadge]
+    [messages, isTyping, onSendMessage, onFileUpload, onMessageClick, onAvatarClick, onEditMessage, onDeleteMessage, onReaction, renderMessage, renderMessageActions, renderText, renderQuotePreview, renderAvatar, renderInputActions, renderInputToolbar, renderEmptyState, renderDateSeparator, renderHeader, renderTimestamp, renderReactions, renderAttachment, disableImageLightbox, showTimestampOnHover, theme, mergedDictionary, placeholder, classNames, clusterTimeWindow, markdownRehypePlugins, openLightbox, inputActions, renderActionMenu, showActionBar, suggestions, onSuggestionClick, renderSuggestions, enableVoiceInput, voiceInputLocale, onVoiceTranscript, renderVoiceButton, slashCommands, onSlashCommand, renderSlashMenu, enableTTS, ttsVoice, ttsRate, renderTTSButton, onPinMessage, renderPinnedBanner, renderDropZone, dropZoneText, presence, renderPresence, showUnreadBadge, renderUnreadBadge, onInputChange, maxInputLength, showCharacterCount, renderSendButton, renderAttachButton]
   );
 
   return (

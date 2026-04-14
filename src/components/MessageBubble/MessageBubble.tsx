@@ -57,7 +57,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = React.memo(({
         <motion.div
            initial={{ opacity: 0, y: 5 }}
            animate={{ opacity: 1, y: 0 }}
-           className="chat-ui-system-badge"
+           className={clsx('chat-ui-system-badge', classNames?.systemMessage)}
            onClick={onMessageClick ? () => onMessageClick(message) : undefined}
            role="status"
         >
@@ -180,7 +180,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = React.memo(({
                 : message.reactions.map((r) => (
                     <button
                       key={r.emoji}
-                      className={clsx('chat-ui-reaction-badge', r.reacted && 'reacted')}
+                      className={clsx('chat-ui-reaction-badge', r.reacted && 'reacted', classNames?.reactionBadge)}
                       onClick={() => onReaction?.(message, r.emoji)}
                       {...{ 'aria-pressed': r.reacted ?? false }}
                       aria-label={`React with ${r.emoji}${r.count > 1 ? `, ${r.count} reactions` : ''}`}
