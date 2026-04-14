@@ -32,7 +32,9 @@ npm install chat-ui
 | **Image Lightbox** | Gallery viewer for image attachments | Always on |
 | **Virtualized List** | `@tanstack/react-virtual` for 10K+ messages | Always on |
 | **Sub-microsecond Sizing** | `@chenglou/pretext` for ultra-fast off-DOM height calculations | Always on |
-| **Theming** | Dark/Light/Custom tokens via CSS variables | `theme` |
+| **Theming** | Dark/Light/Custom tokens via CSS variables with IDE autocomplete | `theme` |
+| **Character Counter** | Input length validation with visual over-limit state | `maxInputLength` |
+| **Custom Send/Attach** | Replace the send or attach button with any custom UI | `renderSendButton` |
 | **Message Search** | Full-text message search with highlighting | `useMessageSearch` |
 
 ---
@@ -86,7 +88,7 @@ export default function App() {
 |------|------|---------|-------------|
 | `messages` | `ChatMessage[]` | **required** | Array of messages to display |
 | `onSendMessage` | `(text: string) => void` | **required** | Called when user sends a message |
-| `theme` | `'dark' \| 'light' \| Record<string, string>` | `'dark'` | Theme mode or custom CSS variables |
+| `theme` | `'dark' \| 'light' \| ChatTokens` | `'dark'` | Theme mode or custom CSS variables with autocomplete |
 | `placeholder` | `string` | `'Type a message...'` | Input placeholder text |
 | `isTyping` | `boolean` | `false` | Show typing indicator |
 | `headerTitle` | `string` | `'Chat'` | Header title text |
@@ -95,6 +97,11 @@ export default function App() {
 | `className` | `string` | — | Root container class |
 | `classNames` | `ChatClassNames` | — | Per-element class overrides (e.g. Tailwind) |
 | `dictionary` | `Partial<ChatDictionary>`| — | UI string overrides for Localization (i18n) |
+| `onInputChange` | `(text: string) => void` | — | Fires on every keystroke in the input |
+| `maxInputLength` | `number` | — | Max characters. Disables send + shows red when exceeded |
+| `showCharacterCount` | `boolean` | `false` | Show a `[45/500]` counter near the send button |
+| `renderSendButton` | `(disabled, onClick) => ReactNode` | — | Replace the default send button |
+| `renderAttachButton` | `(onAttach) => ReactNode` | — | Replace the default paperclip button |
 
 #### Suggested Replies
 
@@ -299,6 +306,40 @@ import { PresenceIndicator } from 'chat-ui';
 
 ---
 
+#### Input Behavior & Character Counter
+
+```tsx
+<ChatUI
+  onInputChange={(text) => console.log('Typing:', text.length)}
+  maxInputLength={500}
+  showCharacterCount
+/>
+```
+
+When `maxInputLength` is set:
+- The textarea turns **red** when the limit is exceeded
+- The send button is **disabled**
+- The counter displays `45/500` and goes red on overflow
+
+---
+
+#### Custom Send & Attach Buttons
+
+```tsx
+<ChatUI
+  renderSendButton={(disabled, onClick) => (
+    <button disabled={disabled} onClick={onClick} className="my-send">
+      Send ✨
+    </button>
+  )}
+  renderAttachButton={(onAttach) => (
+    <button onClick={onAttach}>📎 Files</button>
+  )}
+/>
+```
+
+---
+
 ### Render-Prop Overrides
 
 Every visual element can be fully customized via render-props:
@@ -326,13 +367,15 @@ Every visual element can be fully customized via render-props:
 | `renderUnreadBadge` | Custom unread count badge |
 | `renderDropZone` | Custom drag-drop overlay |
 | `renderPresence` | Custom presence indicator |
+| `renderSendButton` | Custom send button |
+| `renderAttachButton` | Custom attach/paperclip button |
 
 ---
 
 ### `ChatMessage` Type
 
 ```ts
-interface ChatMessage {
+interface ChatMessage<TMeta = Record<string, unknown>> {
   id: string;
   text?: string;
   payload?: any;                    // Custom rich media (images, forms, etc.)
@@ -345,7 +388,19 @@ interface ChatMessage {
   isEdited?: boolean;
   isPinned?: boolean;
   suggestions?: SuggestedReply[];   // Per-message suggested replies
+  meta?: TMeta;                     // Your custom metadata
 }
+```
+
+The `meta` field is generic — attach any typed metadata without fighting `any`:
+
+```ts
+type MyMeta = { threadId: string; avatarUrl: string };
+const msg: ChatMessage<MyMeta> = {
+  id: '1', sender: 'user', timestamp: new Date(),
+  text: 'Hello!',
+  meta: { threadId: 'thread-42', avatarUrl: '/avatar.png' },
+};
 ```
 
 ---
@@ -359,21 +414,44 @@ interface ChatMessage {
 <ChatUI theme="light" />  // Clean light mode
 ```
 
-### Custom Tokens
+### Custom Tokens (`ChatTokens`)
 
-Override any CSS variable:
+The `ChatTokens` interface gives you **full IDE autocomplete** for every CSS variable the library reads:
 
 ```tsx
+import type { ChatTokens } from 'chat-ui';
+
 <ChatUI
   theme={{
     '--c-bg': '#0a0a1a',
     '--c-primary': '#8b5cf6',
-    '--c-bubble-sent': '#6d28d9',
-    '--c-bubble-received': '#1e1b4b',
-    '--c-surface-border': 'rgba(139, 92, 246, 0.2)',
+    '--c-sent-bg': '#6d28d9',
+    '--c-received-bg': '#1e1b4b',
+    '--c-bubble-radius': '20px',
+    '--font-family': '"Inter", sans-serif',
+    '--c-border': 'rgba(139, 92, 246, 0.2)',
   }}
 />
 ```
+
+**All typed tokens:**
+
+| Token | Description |
+|-------|-------------|
+| `--c-primary` | Accent color |
+| `--c-bg` | Main background |
+| `--c-surface` | Card/panel backgrounds |
+| `--c-surface-alt` | Alternate surface |
+| `--c-border` | Border color |
+| `--c-text` | Primary text color |
+| `--c-text-muted` | Muted/secondary text |
+| `--c-sent-bg` | Sent bubble background |
+| `--c-received-bg` | Received bubble background |
+| `--c-bubble-radius` | Bubble corner radius |
+| `--font-family` | Root font family |
+| `--chat-input-radius` | Input bar corner radius |
+
+Custom tokens (`--my-var`) are also supported via an index signature.
 
 ### Available CSS Variables
 
@@ -395,7 +473,7 @@ Override any CSS variable:
 
 ### Tailwind CSS & Deep Overrides
 
-Instead of relying on standard CSS, you can use the `classNames` prop to deep-inject utility classes (like Tailwind CSS) into any structural node of the chat UI!
+Use the `classNames` prop to deep-inject utility classes into any structural node:
 
 ```tsx
 <ChatUI
@@ -403,6 +481,12 @@ Instead of relying on standard CSS, you can use the `classNames` prop to deep-in
     chatRoot: 'my-custom-chat-shadow rounded-2xl border',
     bubbleSent: 'bg-indigo-600 text-white shadow-md',
     bubbleReceived: 'bg-slate-100 text-slate-900',
+    systemMessage: 'bg-amber-100 text-amber-800 rounded-full',
+    suggestedReply: 'border-indigo-300 hover:bg-indigo-50',
+    reactionBadge: 'bg-transparent border',
+    sendButtonActive: 'ring-2 ring-indigo-400',
+    inputArea: 'bg-slate-50 rounded-2xl',
+    attachmentItem: 'rounded-xl overflow-hidden shadow',
     textarea: 'focus:ring-2 focus:ring-indigo-500',
     actionMenuPopover: 'bg-white rounded-lg shadow-xl',
   }}
@@ -570,6 +654,7 @@ import type {
   SlashCommand,
   PresenceStatus,
   ChatTheme,
+  ChatTokens,
   ChatClassNames,
   ChatDictionary,
   ChatControllerRef,
